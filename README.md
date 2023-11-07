@@ -29,6 +29,7 @@ Before you start using this web monitoring dashboard, make sure you have the fol
 4. Start the web monitoring dashboard:
 ```shell
 python main.py
+
 5. Access the dashboard in your web browser at http://127.0.0.1:80
 6. The dashboard will display real-time system information, including CPU usage, memory usage, disk usage, network statistics, system uptime, and the number of running processes.
 
