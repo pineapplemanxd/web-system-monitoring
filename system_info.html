@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>System Information Dashboard</title>
+    <style>
+        /* Add some basic styling for the container and headings */
+        .container {
+            margin: 20px;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Style the info cards */
+        .info-card {
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin: 10px;
+        }
+
+        h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        /* Style the usage labels */
+        .usage-label {
+            font-size: 24px;
+            color: #007BFF;
+            margin-top: 10px;
+        }
+
+        /* Style the network usage and uptime paragraphs */
+        .info-card p {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+
+        /* Adjust the spacing for the row of info cards */
+        .info-container {
+            margin-top: 20px;
+        }
+
+        /* Optional: You can add more specific styling as needed */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">System Information Dashboard</h1>
+
+        <div class="row info-container">
+            <div class="col-md-4 info-card">
+                <h2>CPU Usage</h2>
+                <div class="chart">
+                    <div class="usage-label" id="cpu-usage-label">{{ cpu_percent }}%</div>
+                </div>
+            </div>
+
+            <div class="col-md-4 info-card">
+                <h2>Memory Usage</h2>
+                <div class="chart">
+                    <div class="usage-label" id="memory-usage-label">{{ memory_percent }}%</div>
+                </div>
+            </div>
+
+            <div class="col-md-4 info-card">
+                <h2>Disk Usage</h2>
+                <div class="chart">
+                    <div class="usage-label" id="disk-usage-label">{{ disk_percent }}%</div>
+                </div>
+            </div>
+
+            <div class="col-md-4 info-card">
+                <h2>Network Usage</h2>
+                <p>Received: {{ network_info.bytes_recv }} bytes</p>
+                <p>Sent: {{ network_info.bytes_sent }} bytes</p>
+            </div>
+
+            <div class="col-md-4 info-card">
+                <h2>System Uptime</h2>
+                <p>{{ uptime | int }} seconds</p>
+            </div>
+
+            <div class="col-md-4 info-card">
+                <h2>Running Processes</h2>
+                <p>{{ num_processes }}</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function refreshData() {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var data = JSON.parse(xhr.responseText);
+                    document.getElementById('cpu-usage-label').textContent = data.cpu_percent + '%';
+                    document.getElementById('memory-usage-label').textContent = data.memory_percent + '%';
+                    document.getElementById('disk-usage-label').textContent = data.disk_percent + '%';
+                    document.getElementById('network-usage-label').textContent = 'Received: ' + data.network_info.bytes_recv + ' bytes, Sent: ' + data.network_info.bytes_sent + ' bytes';
+                    document.getElementById('uptime-label').textContent = data.uptime + ' seconds';
+                    document.getElementById('processes-label').textContent = data.num_processes;
+                }
+            };
+            xhr.open('GET', '/', true);
+            xhr.send();
+        }
+
+        refreshData();
+        setInterval(refreshData, 1000);
+    </script>
+</body>
+</html>
