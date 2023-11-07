@@ -15,8 +15,8 @@ Before you start using this web monitoring dashboard, make sure you have the fol
    pip install Flask
 3. **psutil Library**
    - Install the psutil library, which is used to collect system information, with the following command:
-     ```shell
-     pip install psutil
+   ```shell
+   pip install psutil
 
 ## Getting Started
 1. Clone or download this repository to your local machine.
