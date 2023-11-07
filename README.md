@@ -29,7 +29,3 @@ Before you start using this web monitoring dashboard, make sure you have the fol
 4. Start the web monitoring dashboard:
 ```shell
 python main.py
-
-
-
-   
